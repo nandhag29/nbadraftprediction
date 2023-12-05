@@ -31,7 +31,7 @@ print(gnb.feature_importances_)
 
 
 
-# hardcoded knn classifier
+# hardcoded classifiers
 class hardcodedKNN:
     def __init__(self, k):
         self.k = k
@@ -51,3 +51,40 @@ class hardcodedKNN:
         most_common = Counter(k_nearest_labels).most_common(1)
         return most_common[0][0]
     
+
+class hardcodedNaiveBayes:
+    def fit(self, X, y):
+        self.classes = np.unique(y)
+        self.parameters = []
+        for i, c in enumerate(self.classes):
+            X_c = X[np.where(y == c)]
+            self.parameters.append([])
+            for col in X_c.T:
+                parameters = {"mean": col.mean(), "var": col.var()}
+                self.parameters[i].append(parameters)
+
+    def _pdf(self, class_idx, x):
+        output = 1
+        parameters = self.parameters[class_idx]
+        for i in range(len(parameters)):
+            mean = parameters[i]["mean"]
+            var = parameters[i]["var"]
+            numerator = np.exp(-(x[i]-mean)**2 / (2 * var))
+            denominator = np.sqrt(2 * np.pi * var)
+            output *= numerator / denominator
+        return output
+
+    def _predict(self, x):
+        posteriors = []
+
+        for i, c in enumerate(self.classes):
+            prior = np.log(1 / len(self.classes))
+            posterior = np.sum(np.log(self._pdf(i, x)))
+            posterior = prior + posterior
+            posteriors.append(posterior)
+            
+        return self.classes[np.argmax(posteriors)]
+
+    def predict(self, X):
+        y_pred = [self._predict(x) for x in X]
+        return np.array(y_pred)
