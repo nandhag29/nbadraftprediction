@@ -14,5 +14,10 @@ for file in files:
     dfs.append(df)
 
 combined_df = pd.concat(dfs, ignore_index=True)
+
+datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%','3PM','3PA','3P%','FTM','FTA','FT%','REB','AST','Drafted?','Draft Pick','Draft Year']
+combined_df = combined_df[datatokeep]
+combined_df['Drafted?'] = combined_df['Drafted?'].fillna('No')
+
 print(combined_df)
 
