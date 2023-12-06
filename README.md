@@ -4,7 +4,7 @@ B365 Final Project
 
 By: Nandha Gopikannan, Richie Fleming, Dillon New
 
-This project aims to predict whether a basketball player will be drafted to the NBA based on their statistics. The prediction is made using machine learning models trained on historical data.
+This project aims to predict whether a basketball player will be drafted to the NBA based on their statistics. The prediction is made using classifier models trained on historical data.
 
 ## Getting Started
 
@@ -12,7 +12,7 @@ These instructions will guide you on how to run the project on your local machin
 
 ### Prerequisites
 
-You need to have Python installed on your machine. You can download Python here.
+You need to have Python installed on your machine. You can install Python here: https://www.python.org/downloads/.
 
 ### Installation
 
@@ -41,7 +41,7 @@ To run the project, run the main.py file.
 
 Here's an example of how to use the program with a specific player:
 
-1. When prompted, enter the Sports Reference URL for the player. For example:
+1. When prompted, enter the Sports Reference College Basketball URL for the player. For example:
 
 Enter Sports Reference College Basketball URL: https://www.sports-reference.com/cbb/players/anthony-edwards-2.html
 
