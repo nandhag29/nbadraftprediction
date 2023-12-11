@@ -3,6 +3,40 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.linear_model import LogisticRegression
 
+#########################
+# PROCESS AND CLEAN DATA
+#########################
+
+def clean_player_data(dataframe):
+    datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%','3PM','3PA','3P%','FTM','FTA','FT%','REB','AST','Drafted?','Draft Pick','Draft Year']
+    data = dataframe[datatokeep]
+    data['Drafted?'] = data['Drafted?'].fillna('No')
+    data['Draft Pick'] = data['Draft Pick'].fillna(0)
+    data['Draft Year'] = data['Draft Year'].fillna(0)
+    mapping_dict = {'G': 1, 'F': 2, 'C': 3, 'G-F': 4, 'F-C': 5, 'F-G': 6, 'C-F': 7, 'C-G': 8, 'G-C': 9, 'SG': 10, 'SF': 10}
+    data['POS'] = data['POS'].map(mapping_dict)
+    mapping_dict1 = {'Yes': 1, 'No': 0}
+    data['Drafted?'] = data['Drafted?'].map(mapping_dict1)
+    drafted = data[data['Drafted?'] == 1]
+    undrafted = data[(data['Drafted?'] == 0) & (data['PTS'] < 10)]
+    undrafted_sample = undrafted.sample(n=2000, random_state=1)
+    data = pd.concat([drafted, undrafted_sample], ignore_index=True)
+    data = data.dropna()
+    return data
+
+def clean_test_data(dataframe):
+    datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%','3PM','3PA','3P%','FTM','FTA','FT%','REB','AST','Drafted?','Draft Pick','Draft Year']
+    data = dataframe[datatokeep]
+    data['Drafted?'] = data['Drafted?'].fillna('No')
+    data['Draft Pick'] = data['Draft Pick'].fillna(0)
+    data['Draft Year'] = data['Draft Year'].fillna(0)
+    mapping_dict = {'G': 1, 'F': 2, 'C': 3, 'G-F': 4, 'F-C': 5, 'F-G': 6, 'C-F': 7, 'C-G': 8, 'G-C': 9, 'SG': 10, 'SF': 10}
+    data['POS'] = data['POS'].map(mapping_dict)
+    mapping_dict1 = {'Yes': 1, 'No': 0}
+    data['Drafted?'] = data['Drafted?'].map(mapping_dict1)
+    data = data.dropna()
+    return data
+
 ################
 # NEW DATAPOINT
 ################
@@ -13,6 +47,7 @@ def scrape_player_data(url):
     stats = stats[['G', 'MP', 'PTS', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'TRB', 'AST']]
     stats.columns = ['GP', 'MIN', 'PTS', 'FGM', 'FGA', 'FG%', '3PM', '3PA', '3P%', 'FTM', 'FTA', 'FT%', 'REB', 'AST']
     stats = stats.iloc[-2]
+    stats = stats.fillna(0)
     stats = stats.to_frame().T
     return stats
 
