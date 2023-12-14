@@ -6,6 +6,10 @@ from analysis import knn
 from analysis import gnb
 from analysis import lr
 
+##################
+# DATA PROCESSING
+##################
+
 files = glob.glob('./data/training/*.csv')
 dfs = []
 
@@ -19,9 +23,9 @@ data = clean_player_data(data)
 testdata = pd.read_csv('./data/test/2022-2023 stats.csv')
 testdata = clean_test_data(testdata)
 
-print(data)
-print(testdata)
-
+#################
+# TEST FUNCTIONS
+#################
 
 def knntest(data, new_data):
     numcorrect = 0
@@ -31,8 +35,7 @@ def knntest(data, new_data):
         classifier = knn(data, row_df)
         if classifier == draftstatus:
             numcorrect += 1
-        #print(f"Classifier: {classifier}, Draft Status: {draftstatus}")
-    return numcorrect
+    return numcorrect/len(new_data)
 
 def gnbtest(data, new_data):
     numcorrect = 0
@@ -42,8 +45,7 @@ def gnbtest(data, new_data):
         classifier = gnb(data, row_df)
         if classifier == draftstatus:
             numcorrect += 1
-        #print(f"Classifier: {classifier}, Draft Status: {draftstatus}")
-    return numcorrect
+    return numcorrect/len(new_data)
 
 def lrtest(data, new_data):
     numcorrect = 0
@@ -53,8 +55,7 @@ def lrtest(data, new_data):
         classifier = lr(data, row_df)
         if classifier == draftstatus:
             numcorrect += 1
-        #print(f"Classifier: {classifier}, Draft Status: {draftstatus}")
-    return numcorrect
+    return numcorrect/len(new_data)
 
 
 print('KNN Accuracy:')

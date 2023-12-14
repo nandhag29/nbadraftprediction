@@ -8,7 +8,9 @@ from sklearn.linear_model import LogisticRegression
 #########################
 
 def clean_player_data(dataframe):
-    datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%','3PM','3PA','3P%','FTM','FTA','FT%','REB','AST','Drafted?','Draft Pick','Draft Year']
+    datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%',
+                  '3PM','3PA','3P%','FTM','FTA','FT%','REB','AST',
+                  'Drafted?','Draft Pick','Draft Year']
     data = dataframe[datatokeep]
     data['Drafted?'] = data['Drafted?'].fillna('No')
     data['Draft Pick'] = data['Draft Pick'].fillna(0)
@@ -25,7 +27,11 @@ def clean_player_data(dataframe):
     return data
 
 def clean_test_data(dataframe):
-    datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%','3PM','3PA','3P%','FTM','FTA','FT%','REB','AST','Drafted?','Draft Pick','Draft Year']
+
+    datatokeep = ['NAME','POS','GP','MIN','PTS','FGM','FGA','FG%',
+                  '3PM','3PA','3P%','FTM','FTA','FT%','REB','AST',
+                  'Drafted?','Draft Pick','Draft Year']
+    
     data = dataframe[datatokeep]
     data['Drafted?'] = data['Drafted?'].fillna('No')
     data['Draft Pick'] = data['Draft Pick'].fillna(0)
@@ -62,7 +68,7 @@ label_col = 'Drafted?'
 def knn(data, new_data):
     feature_cols = ['GP','MIN','PTS','FGM','FGA','FG%','3PM','3PA','3P%','FTM','FTA','FT%','REB','AST']
     label_col = 'Drafted?'
-    knn = KNeighborsClassifier(n_neighbors=14)
+    knn = KNeighborsClassifier()
     X = data[feature_cols]
     y = data[label_col]
     knn.fit(X, y)

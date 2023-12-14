@@ -48,3 +48,5 @@ Enter Sports Reference College Basketball URL: https://www.sports-reference.com/
 2. The program will scrape the player's data from the provided URL, use the machine learning model to predict whether the player will be drafted, and display the prediction.
 
 If you'd like to run the prediction for another player, close and run the main.py file again, and enter a new Sports Reference link.
+
+Model tests can be run through the test.py file, and the outputs for the tests are printed in the terminal. The models are tested against 2022-2023 NCAA season data and 2023 NBA Draft data.
