@@ -6,6 +6,8 @@ By: Nandha Gopikannan, Richie Fleming, Dillon New
 
 This project aims to predict whether a basketball player will be drafted to the NBA based on their statistics. The prediction is made using classifier models trained on historical data.
 
+Our data collection, development process, and findings are detailed in the "Predicting_NBA_Draft_Outcomes" PDF.
+
 ## Getting Started
 
 These instructions will guide you on how to run the project on your local machine.
